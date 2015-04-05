@@ -5,8 +5,6 @@ Created on 05/apr/2015
 '''
 
 class Item(object):
-    '''
-    Base abstract class for a generic item
-    '''
+    '''Base abstract class for a generic item.'''
     
     pass

@@ -5,7 +5,16 @@ Created on 06/apr/2015
 '''
 
 class Character(object):
-    '''Abstract base class for a RPG character'''
+    '''Base class for a RPG character.
     
-    pass
+    This class implements a simple character having the name as the only 
+    property.
+    '''
+    
+    def __init__(self, name:str='Character') -> 'Character':
+        '''Makes a character with its name'''
+        self.name = name
+    
+    def __str__(self):
+        return 'Character: ' + self.name
         

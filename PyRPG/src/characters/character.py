@@ -11,7 +11,7 @@ class Character(object):
     property.
     '''
     
-    def __init__(self, name:str='Character') -> 'Character':
+    def __init__(self, name: str = 'Character'):
         '''Makes a character with its name'''
         self.name = name
     

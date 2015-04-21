@@ -18,3 +18,12 @@ class Character(object):
     def __str__(self):
         return 'Character: ' + self.name
         
+        
+class RPGCharacter(Character):
+    '''A complete RPG character.
+    
+    This class implements a RPG character with her/his name, race, attributes, 
+    actions, inventory.'''
+    
+    pass
+    

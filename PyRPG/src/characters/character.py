@@ -4,6 +4,8 @@ Created on 06/apr/2015
 @author: marcello
 '''
 
+import actions.Actions as Actions
+
 class Character(object):
     '''Base class for a RPG character.
     
@@ -20,10 +22,14 @@ class Character(object):
         
         
 class RPGCharacter(Character):
-    '''A complete RPG character.
+    '''A minimal but complete RPG character.
     
     This class implements a RPG character with her/his name, race, attributes, 
-    actions, inventory.'''
+    actions, inventory.
+    Added until now:
+    - actions
+    '''
     
-    pass
-    
+    def __init__(self, name: str, actions: Actions):
+        super().__init__(name)
+        self.actions = actions   

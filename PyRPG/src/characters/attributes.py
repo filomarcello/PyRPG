@@ -13,7 +13,7 @@ class Abilities(object):
     the scores. The scores must be numbers, whatever type.
     '''
 
-    def __init__(self, abilities: dict = {'strength': 1}):
+    def __init__(self, abilities: dict = {'attack': 1}):
         self.abilities = abilities
         
     def set_ability(self, ability_name: str, value):

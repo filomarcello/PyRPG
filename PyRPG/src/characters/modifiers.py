@@ -5,11 +5,19 @@ Created on 23/apr/2015
 '''
 
 class Modifier(object):
-    '''Class that map modifiers from abilities, races, etc. to actions.'''
+    '''Class that maps modifiers onto the actions.
+    
+    This class should be considered as a dict with actions names as keys and 
+    values as relative numbers to be added to the character action.
+    Each item, ability or whatever has a Modifier class. The character class
+    will manage them.    
+    '''
 
-    def __init__(self, mod_tableau: 'URI'):
-        '''Builds a modifier reading a file of modificators in URI pathway.
+    def __init__(self, actions: 'Actions'):
+        '''Build an empty Modifiers with Actions names.'''
+        self.modifiers = {k: 0 for k in actions.keys}
         
-        The file must be in csv format (',' as separator
-        '''
+    def add(self, name: str, value: 'Number'):    
+        '''Add the modifier value to the name action.'''
+        self.modifiers[name] = value
         

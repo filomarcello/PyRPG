@@ -9,18 +9,26 @@ class Character(object):
     
     This class implements a simple character having name, hitpoints, and
     experience points as minimal properties.
-    
-    >>> c = Character(name='Pippo', xp=1000, hp=20)
-    >>> print(c)
-    Character: Pippo
-    Xp: 1000
-    Hitpoints: 20
-    
     '''
     
-    def __init__(self, name: str = 'Character', 
+    def __init__(self, name: str = 'noname', 
                  xp: 'Number' = 0, 
                  hp: 'Number' = 1):
+        '''Name, experience points and hitpoints make a basic RPG character.
+        
+        Default constructor:
+        >>> c = Character()
+        >>> print(c)
+        Character: noname
+        Xp: 0
+        Hitpoints: 1
+        
+        >>> p = Character(name='Pippo', xp=1000, hp=20)
+        >>> print(p)
+        Character: Pippo
+        Xp: 1000
+        Hitpoints: 20
+        '''
         
         self.name = name
         self.xp = xp
@@ -30,11 +38,9 @@ class Character(object):
         return 'Character: {s.name}\nXp: {s.xp}\nHitpoints: {s.hp}'\
             .format(s=self)
                 
-                
         
-        
-class RPGCharacter(Character): # TODO
-    '''A minimal but complete RPG character.
+class RPGCharacter(Character): # TODO class, race, attribute, inventory, wearing
+    '''A complete RPG character.
     
     This class implements a RPG character with her/his name, race, attributes, 
     actions, inventory.

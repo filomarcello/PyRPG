@@ -14,7 +14,9 @@ class Modifier(object):
     '''
 
     def __init__(self, actions: 'Actions'):
-        '''Build an empty Modifiers with Actions names.'''
+        '''Build an empty Modifiers with Actions names.
+        
+        '''
         self.modifiers = {k: 0 for k in actions.keys}
         
     def add(self, name: str, value: 'Number'):    

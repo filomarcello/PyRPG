@@ -33,6 +33,7 @@ class Abilities(object):
     def set_ability(self, ability_name: str, value):
         '''Set the ability_name to the value (numeric).
         
+        >>> ab = Abilities()
         >>> ab.set_ability('attack', 10)
         >>> ab.get_ability('attack')
         10
@@ -40,11 +41,16 @@ class Abilities(object):
         self._abilities[ability_name] = value
         
     def get_ability(self, ability_name: str) -> 'Number':
-        '''Get the value (numeric) of 'ability_name' ability.'''
+        '''Get the value (numeric) of 'ability_name' ability.
+        
+        >>> ab = Abilities()
+        >>> ab.get_ability('attack')
+        1
+        '''
         return self._abilities[ability_name]
     
 
-class DD_Abilities(Abilities): #TODO: sistemare 
+class DD_Abilities(Abilities): 
     '''Set then abilities to the standard D&D.
     
     Preset abilities are strength, dexterity, constitution, intelligence,
@@ -60,10 +66,11 @@ class DD_Abilities(Abilities): #TODO: sistemare
         0
         
         This constructor does not check if values are in range for D&D rules:    
-        >>> dd_ab2 = DD_Abilities([1000, 3000, -69, 10.25, 858, 0)
+        >>> dd_ab2 = DD_Abilities([1000, 3000, -69, 10.25, 858, 0])
         >>> dd_ab2.get_ability('constitution')
         -69
         >>> dd_ab2.get_ability('wisdom')
+        858
         '''
         super().__init__(abilities={n: v for n, v 
                                     in zip(DD_ABILITIES_NAMES, values)})

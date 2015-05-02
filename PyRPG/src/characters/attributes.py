@@ -75,9 +75,7 @@ class DD_Abilities(Abilities):
         super().__init__(abilities={n: v for n, v 
                                     in zip(DD_ABILITIES_NAMES, values)})
                                     
-                                   
-
-
+ 
 # testing by doctest         
 if __name__ == "__main__":
     import doctest

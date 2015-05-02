@@ -4,8 +4,8 @@ Created on 01/mag/2015
 @author: marcello
 '''
 
-class Cls(object):
-    '''Cls (for class) is the 'profession' of the character.
+class Occupation(object):
+    '''Occupation (for class) is the 'profession' of the character.
     
     May be military, magic users, clerics, vagabond, etc.
     '''
@@ -13,7 +13,7 @@ class Cls(object):
     def __init__(self, name: str = 'warrior', mods: 'Modifier' = None):
         '''Specifies the race name and the modifiers (Modifier class).
         
-        >>> w = Cls()
+        >>> w = Occupation()
         >>> print(w)
         Class: warrior
         '''

@@ -2,12 +2,20 @@
 Created on 05/apr/2015
 
 @author: marcello
+
+Issues: 
+- should be added a method for "subtract" money or not? It may be used add 
+method.
+- evaluate the utility of a function of add/left single type of coin.
+
+
 '''
 
 from items.item import Item
 
 #constants
 COIN_WEIGHT = 0.02 # a coin weights 20 grams (0.02 Kilos)
+GEM_WEIGHT = 0.02 # a gem weights 20 grams (0.020 Klios)
 
 DD_CURRENCIES = ['platinum', 'gold', 'electrum', 'silver', 'copper']
 # value is in gold coins
@@ -85,6 +93,30 @@ class Money(Item):
             return dict(self._amount)
         
         return self._amount[coin]
+        
+        
+class Gem(Item):
+    '''Class for gem objects.'''
+    
+    def __init__(self, name: str = 'gem', value: int = 5, 
+                 description: str = ''):
+        '''For default returns a low value anonym gem.
+        
+        TEST AND DESCRIPTION TODO
+        '''
+        super().__init__(name, GEM_WEIGHT) # set
+        self._value = value
+        self._description = description
+        
+    def get_description(self):
+        return self._description
+        
+    def get_value(self):
+        return self._value
+        
+    def __str__(self):
+        return 'Gem:\nDescription: {s._description}\nValue: {s._value}'\
+                .format(s=self)
        
     
 

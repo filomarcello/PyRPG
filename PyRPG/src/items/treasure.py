@@ -12,7 +12,7 @@ from items.item import Item
 
 #constants
 COIN_WEIGHT = 0.02 # a coin weights 20 grams (0.02 Kilos)
-GEM_WEIGHT = 0.02 # a gem weights 20 grams (0.020 Klios)
+GEM_WEIGHT = 0.02 # a gem weights 20 grams (0.020 Kilos)
 
 DD_CURRENCIES = ['platinum', 'gold', 'electrum', 'silver', 'copper']
 
@@ -100,9 +100,15 @@ class Money(Item):
     def get_value(self):
         '''Return the overall value of all coins in gold coins.
         
-        TODO TEST
+        >>> m = Money()
+        >>> m.get_value()
+        0.01
+        >>> m2 = Money({'platinum': 1, 'gold': 10, 'silver': 30})
+        >>> m2.get_value()
+        18.0
         '''
-        pass        
+        return sum([self._amount[coin]*rate for coin, rate 
+                    in DD_CURRENCY_EXCHANGE.items()])       
         
         
 class Gem(Item):

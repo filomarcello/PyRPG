@@ -114,20 +114,33 @@ class Money(Item):
 class Gem(Item):
     '''Class for gem objects.'''
     
-    def __init__(self, name: str = 'gem', value: int = 5, 
-                 description: str = ''):
+    def __init__(self, value: int = 5, descr: str = ''):
         '''For default returns a low value anonym gem.
         
-        TEST AND DESCRIPTION TODO
+        >>> g = Gem()
+        >>> print(g)
+        Gem:
+        Description: 
+        Value: 5
         '''
-        super().__init__(name, GEM_WEIGHT) # set
+        super().__init__('gem', GEM_WEIGHT)
         self._value = value
-        self._description = description
+        self._description = descr
         
     def get_description(self):
+        '''
+        >>> g = Gem(descr='A beautyful gem but stinks')
+        >>> g.get_description()
+        'A beautyful gem but stinks'
+        '''
         return self._description
         
     def get_value(self):
+        '''
+        >>> g = Gem(value=50)
+        >>> g.get_value()
+        50
+        '''
         return self._value
         
     def __str__(self):

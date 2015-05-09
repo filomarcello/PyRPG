@@ -4,6 +4,8 @@ Created on 01/mag/2015
 @author: marcello
 '''
 import random as rand
+import itertools as itools
+import bisect as bs
 
 class Dice(object):
     '''Implements the classical dices in RPG.
@@ -60,7 +62,38 @@ class Dice(object):
         >>> sum(d.get_sequence()) == o
         True
         '''
-        return self._sequence    
+        return self._sequence
+    
+class DiceTable(Dice):   
+    '''Implements a table of intervals to select randomly.'''
+    
+    def __init__(self, tab: tuple): 
+        '''tab is a tuple from which random weighted select an item.
+        
+        tab has to be as the following:
+        ((weight, item_to_return), ...)
+                
+        >>> dt = DiceTable(((1, 'one'), (2, 'two'), (9, 'else')))
+        >>> dt._faces
+        12
+        >>> dt._cumul
+        (1, 3, 12)
+        >>> dt._items
+        ('one', 'two', 'else')
+        '''
+        weights, items = zip(*tab)
+        super().__init__('1d' + str(sum(weights)))
+        self._cumul = tuple(itools.accumulate(weights))
+        self._items = items
+        
+    def throw(self):
+        '''Returns random weighted item.
+        
+        >>> dt = DiceTable(((1, 'one'), (4, 'two'), (5, 'else')))
+        >>> dt.throw() in ['one', 'two', 'else']
+        True
+        '''
+        return self._items[bs.bisect(self._cumul, super().throw())]
     
 # tests
 if __name__ == '__main__':

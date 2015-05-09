@@ -7,21 +7,25 @@ Functions for creating money, precious, and treasures.
 '''
 
 from items.treasure import Gem
+from rpg_tools.dices import DiceTable
 
 # constants
-# gems                 
-# d100                   interval  value    type
-ADD2_GEMS_VALUE_TABLE = [((1,  25), (10,   'ornamental'  )),
-                         ((26, 50), (50,   'semiprecious')),
-                         ((51, 70), (100,  'fancy'       )),
-                         ((71, 90), (500,  'precious'    )),
-                         ((91, 99), (1000, 'gems'        )),
-                         ((0,   0), (5000, 'jewel'       )),]
+# gems: following AD&D 2nd edition rules               
+# d100                 weight value   type
+ADD2_GEMS_VALUE_TABLE = [(25, (10,   'ornamental'  )),
+                         (25, (50,   'semiprecious')),
+                         (20, (100,  'fancy'       )),
+                         (20, (500,  'precious'    )),
+                         (9,  (1000, 'gems'        )),
+                         (1,  (5000, 'jewel'       )),]
 
-ADD2_GEMS_PROB_MOD = 0.10
+ADD2_GEMS_PROB_MOD = 0.10 # prob to have a modified gem
 
 ADD2_GEMS_VARIATION_TABLE = '' # TODO
 
 def jeweler() -> 'Gem':
-    '''Random gem using AD&D 2nd edition rules. '''
+    '''Random gem using AD&D 2nd edition rules. 
+    
+    TODO TESTS
+    '''
     pass

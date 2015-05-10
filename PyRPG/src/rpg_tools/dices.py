@@ -28,14 +28,7 @@ class Dice(object):
         
         Assert 'd' in dice_string. TODO Exceptions?
         '''
-        
-        # times to throw the dice
-        self._cast_times = dice_string[:dice_string.find('d')] or 1
-        self._cast_times = int(self._cast_times)
-        
-        # number of the dice faces
-        self._faces = int(dice_string[dice_string.find('d') + 1:])
-        
+        self._cast_times, self._faces = self._process_dice_string(dice_string)
         self._sequence =  [] # stores the sequence of numbers thrown
         
     def __str__(self):
@@ -48,10 +41,7 @@ class Dice(object):
         >>> 3 <= d.throw() <= 24
         True
         '''
-        
-        self._sequence = [rand.randint(1, self._faces) 
-                          for i in range(self._cast_times)]
-        
+        self._sequence = self._throws(self._cast_times, self._faces)
         return sum(self._sequence)
     
     def get_sequence(self) -> list:
@@ -63,6 +53,34 @@ class Dice(object):
         True
         '''
         return self._sequence
+    
+    def throw_this(self, dice_string: str) -> int:
+        '''Static method that throws a temporary whatever dice.
+        
+        Does not hold faces, cast_times, and sequences. For this purpose build
+        a proper dice by constructor.
+        >>> d = Dice()
+        >>> print(d)
+        1d6
+        >>> 3 <= d.throw_this('3d10') <= 30
+        True
+        '''
+        return sum(self._throws(*self._process_dice_string(dice_string)))
+    
+    # internal function that processes dice_string    
+    def _process_dice_string(self, dice_string: str) -> tuple:
+        # times to throw the dice
+        cast_times = dice_string[:dice_string.find('d')] or 1
+        cast_times = int(cast_times)
+        # number of the dice faces
+        faces = int(dice_string[dice_string.find('d') + 1:])
+        return cast_times, faces
+    
+    # internal function that throws a sequence of dice casts
+    def _throws(self, cast_times, faces):
+        return [rand.randint(1, faces) 
+                for i in range(cast_times)]
+    
     
 class DiceTable(Dice):   
     '''Implements a table of intervals to select randomly.'''

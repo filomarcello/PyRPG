@@ -88,23 +88,26 @@ class Mint(Dice):
         elecplat: 'electrum' or 'platinum'. Whatever else to choose randomly
         
         >>> m = Mint()
-        >>> m.coinage({'copper': ( TODO TESTS 
-        
+        >>> g = m.coinage({'copper': (100, '1d10', 1000), 'silver': (100, '1d6', 1000), 'gold':   (25,  '1d6', 100), 'electrum': (25, '1d4', 10), 'platinum': (25, '1d4', 10)}, elecplat='platinum')
+        >>> type(g)
+        <class 'items.treasure.Money'>
         '''
         m = {}
         for c in DD_CURRENCIES:
             if self.throw() < tab[c][0]: # if 1d100 < prob_coin
                 m[c] = self.throw_this(tab[c][1]) * tab[c][2]
+            else:
+                m[c] = 0
         
         if elecplat == 'electrum':
-            del m['platinum']
+            m['platinum'] = 0
         elif elecplat == 'platinum':
-            del m['electrum']
+            m['electrum'] = 0
         else:
             if self.throw_this('1d2') == 1:
-                del m['platinum']
+                m['platinum'] = 0
             else:
-                del m['electrum']
+                m['electrum'] = 0
             
         return Money(m)
     

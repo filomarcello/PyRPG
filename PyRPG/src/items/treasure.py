@@ -12,7 +12,7 @@ from items.item import Item
 
 #constants
 COIN_WEIGHT = 0.02 # a coin weights 20 grams (0.02 Kilos)
-GEM_WEIGHT = 0.02 # a gem weights 20 grams (0.020 Kilos)
+GEM_WEIGHT = 0.04 # a gem weights 20 grams (0.040 Kilos)
 
 DD_CURRENCIES = ['platinum', 'gold', 'electrum', 'silver', 'copper']
 

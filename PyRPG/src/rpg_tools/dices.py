@@ -114,6 +114,7 @@ class DiceTable(Dice):
         return self._items[bs.bisect(self._cumul, super().throw())]
     
 # tests
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()

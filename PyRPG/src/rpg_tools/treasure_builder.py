@@ -8,21 +8,44 @@ Class and functions for creating money, precious, and treasures.
 
 from items.treasure import Gem, Money, DD_CURRENCIES
 from rpg_tools.dices import DiceTable, Dice
+import random as rand
 
 
 # constants for hoard builder
 
-# gems: following AD&D 2nd edition rules               
-# d100                 weight value   type
-ADD2_GEMS_VALUE_TABLE = ((25, (10,   'ornamental'  )),
-                         (25, (50,   'semiprecious')),
-                         (20, (100,  'fancy'       )),
-                         (20, (500,  'precious'    )),
-                         (9,  (1000, 'gems'        )),
-                         (1,  (5000, 'jewel'       )),)
+# gems: following AD&D 2nd edition rules 
+#                   value  descriprion  
+ADD2_GEMS_LEVELS = ((10,   'ornamental'  ),
+                    (50,   'semiprecious'),
+                    (100,  'fancy'       ),
+                    (500,  'precious'    ),
+                    (1000, 'gems'        ),
+                    (5000, 'jewel'       ))
+                              
+# prob is for 1d100, level is from ADD2_GEMS_LEVELS
+ADD2_GEMS_VALUE_TABLE = tuple((prob, level) for prob, level in 
+                             zip((25, 25, 20, 20, 9, 1), ADD2_GEMS_LEVELS))
 
 ADD2_GEMS_PROB_MOD = 0.10 # prob to have a modified gem
-ADD2_GEMS_VARIATION_TABLE = '' # TODO
+
+# AD&D 2nd edition Gem modificator function
+def _ADD2_gem_modificator(gem: 'Gem') -> 'Gem':
+    n = rand.randint(1, 6)
+    if   n == 2:
+        gem._value *= 2
+    elif n == 3:
+        gem._value += gem._value * (rand.randint(1, 6) * 10) / 100
+    elif n == 4:
+        gem._value -= gem._value * (rand.randint(1, 4) * 10) / 100
+    elif n == 5:
+        gem._value /= 2
+    elif n == 1:
+        pass
+    elif n == 2:
+        pass
+        
+    return gem
+
 ADD2_GEMS_EXT_DESCRIPTIONS = '' # TODO
 
 # money: following AD&D 2nd edition rules
@@ -44,6 +67,10 @@ class Jeweler(DiceTable):
         True
         '''
         value, descr = self.throw()
+        if self.throw_this('1d100') < 11:
+            # modification
+            pass
+        
         # here implement extended description
         return Gem(value, descr)
     
@@ -112,6 +139,7 @@ class Mint(Dice):
         return Money(m)
     
 # test
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()

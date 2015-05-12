@@ -21,6 +21,8 @@ ADD2_GEMS_LEVELS = ((10,   'ornamental'  ),
                     (500,  'precious'    ),
                     (1000, 'gems'        ),
                     (5000, 'jewel'       ))
+
+ADD2_GEMS_BASIC_DESCR = tuple(d[1] for d in ADD2_GEMS_LEVELS)
                               
 # prob is for 1d100, level is from ADD2_GEMS_LEVELS
 ADD2_GEMS_VALUE_TABLE = tuple((prob, level) for prob, level in 
@@ -28,21 +30,40 @@ ADD2_GEMS_VALUE_TABLE = tuple((prob, level) for prob, level in
 
 ADD2_GEMS_PROB_MOD = 0.10 # prob to have a modified gem
 
-# AD&D 2nd edition Gem modificator function
+# AD&D 2nd edition Gem modifyier function
 def _ADD2_gem_modificator(gem: 'Gem') -> 'Gem':
     n = rand.randint(1, 6)
     if   n == 2:
         gem._value *= 2
     elif n == 3:
-        gem._value += gem._value * (rand.randint(1, 6) * 10) / 100
+        gem._value *= 1.0 + (rand.randint(1, 6) * 10) / 100
+        gem._value = int(gem._value)
     elif n == 4:
-        gem._value -= gem._value * (rand.randint(1, 4) * 10) / 100
+        gem._value *= 1.0 - (rand.randint(1, 4) * 10) / 100
+        gem._value = int(gem._value)
     elif n == 5:
         gem._value /= 2
-    elif n == 1:
-        pass
+    elif n == 1: # promote gem to the next level
+        one = 1
+        while one == 1 and gem._value < 100000:
+            l = ADD2_GEMS_BASIC_DESCR.index(gem._description)
+            if l < 6:
+                gem._value, gem._description = ADD2_GEMS_BASIC_DESCR[l + 1]
+            else:
+                gem._value *= 2
+            one = rand.randint(1, 6)
     elif n == 2:
-        pass
+        six = 6
+        counter = 0
+        while six == 6 and gem._value > 1 and counter < 6:
+            l = ADD2_GEMS_BASIC_DESCR.index(gem._description)
+            if l > 1:
+                gem._value, gem._description = ADD2_GEMS_BASIC_DESCR[l - 1]
+            else:
+                gem._value /= 2
+                gem._value = int(gem._value)
+            one = rand.randint(1, 6)
+            counter += 1
         
     return gem
 
@@ -67,12 +88,13 @@ class Jeweler(DiceTable):
         True
         '''
         value, descr = self.throw()
-        if self.throw_this('1d100') < 11:
-            # modification
-            pass
+        g = Gem(value, descr)
         
+        if self.throw_this('1d100') < 11: # modification
+            _ADD2_gem_modificator(g)
+                    
         # here implement extended description
-        return Gem(value, descr)
+        return g
     
     def multiple_craft(self, n: int) -> list:
         '''Return a list of n gems.

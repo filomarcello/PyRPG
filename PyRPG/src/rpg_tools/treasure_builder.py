@@ -43,7 +43,7 @@ def _ADD2_gem_modificator(gem: 'Gem') -> 'Gem':
         gem._value = int(gem._value)
     elif n == 5:
         gem._value /= 2
-    elif n == 1: # promote gem to the next level
+    elif n == 1: # promote gem 
         one = 1
         while one == 1 and gem._value < 100000:
             l = ADD2_GEMS_BASIC_DESCR.index(gem._description)
@@ -52,7 +52,7 @@ def _ADD2_gem_modificator(gem: 'Gem') -> 'Gem':
             else:
                 gem._value *= 2
             one = rand.randint(1, 6)
-    elif n == 2:
+    elif n == 6: # demote gem
         six = 6
         counter = 0
         while six == 6 and gem._value > 1 and counter < 6:
@@ -67,10 +67,69 @@ def _ADD2_gem_modificator(gem: 'Gem') -> 'Gem':
         
     return gem
 
-ADD2_GEMS_EXT_DESCRIPTIONS = '' # TODO
-
-# money: following AD&D 2nd edition rules
-
+# TODO arrange descriptions
+ADD2_GEMS_EXT_DESCRIPTIONS = (('ornamental', 
+        ('Azurite: Opaque, mottled deep blue',
+        'Banded Agate: Brown, blue, red, and white stripes',
+        'Blue Quartz: Transparent pale blue',
+        'Eye Agate: Gray, white, brown, blue, and green circles',
+        'Hematite: Gray-black',
+        'Lapis Lazuli: Light or dark blue with yellow flecks',
+        'Malachite: Striated light and dark green',
+        'Moss Agate: Pink, yellow-white with gray-green moss-like markings',
+        'Obsidian: Jet black',
+        'Rhodochrosite: Light pink',
+        'Tiger Eye Agate: Rich golden brown with dark striping',
+        'Turquoise: Aqua with darker mottling'),),
+                              ('semiprecious',
+        ('Bloodstone: Dark gray with red flecks',
+        'Carnelian: Orange to red-brown',
+        'Chalcedony: White',
+        'Chrysoprase: Translucent apple to emerald green',
+        'Citrine: Pale yellow brown',
+        'Jasper: Blue, black to brown',
+        'Moonstone: White with pale blue hue',
+        'Onyx: Black, white, or bands of both',
+        'Rock Crystal: Clear, transparent',
+        'Sardonyx: Bands of red and white',
+        'Smoky Quartz: light gray, yellow, brown or blue',
+        'Star Rose Quartz: Smoky rose with white star center',
+        'Zircon: Clear pale aqua',),),
+                               ('fancy',
+        ('Amber: Transparent golden',
+        'Alexandrite: Dark green',
+        'Amethyst: Purple crystal',
+        'Chrysoberyl: green or yellow green',
+        'Coral: Pink to crimson',
+        'Garnet: Deep red to violet crystal',
+        'Jade: Light to dark green or white',
+        'Jet: Deep black',
+        'Pearl: Pure white, rose, to black',
+        'Spinel: Red, red-brown, green, or deep blue',
+        'Tourmaline: Pale green, blue, brown, or red',),),
+                                ('precious',
+        ('Aquamarine: pale blue green',
+         'Garnet: Deep red to violet crystal',
+         'Pearl: Pure white, rose, to black',
+         'Peridot: Olive green',
+         'Spinel: Red, red-brown, green, or deep blue',
+         'Topaz: Golden yellow',),),
+                                 ('gems',
+        ('Black Opal: Dark green with black mottling and golden flecks',
+        'Fire Opal: Fiery red',
+        'Opal: Pale blue with green and gold mottling',
+        'Oriental Amethyst: Deep purple',
+        'Oriental Topaz: Fiery yellow',
+        'Sapphire: Clear to medium blue',),),
+                                  ('jewels',
+        ('Black Sapphire: Rich black with highlights',
+        'Diamond: Clear blue-white, rich blue, yellow, or pink',
+        'Emerald: Brilliant green',
+        'Jacinth: Fiery orange',
+        'Oriental Emerald: Bright green',
+        'Ruby: Clear to deep crimson red',
+        'Star Ruby: Translucent ruby with white star highlights',
+        'Star Sapphire: Translucent blue with white star highlights',),))
 
 
 class Jeweler(DiceTable):
@@ -80,7 +139,7 @@ class Jeweler(DiceTable):
         '''tab as in DiceTable class constructor.'''
         super().__init__(tab)
         
-    def craft(self) -> 'Gem':
+    def craft(self) -> 'Gem': # TODO testing
         '''Return a single gem.
         
         >>> j = Jeweler(ADD2_GEMS_VALUE_TABLE)
@@ -93,7 +152,8 @@ class Jeweler(DiceTable):
         if self.throw_this('1d100') < 11: # modification
             _ADD2_gem_modificator(g)
                     
-        # here implement extended description
+        g = self._ext_descr(g) # add extended description
+        
         return g
     
     def multiple_craft(self, n: int) -> list:

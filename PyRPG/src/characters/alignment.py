@@ -88,7 +88,7 @@ class DD_Alignment(Alignment):
         '''
         self._ethics = ethics
 
-# TODO implements ADD_Alignments
+# TODO implements ADD2_Alignments
 
 
 # testing by doctest         

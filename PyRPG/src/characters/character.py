@@ -46,6 +46,7 @@ class RPGCharacter(Character): # TODO class, race, attribute, inventory, wearing
     actions, inventory.
     Added until now:
     - actions
+    - history
     '''
     pass 
 

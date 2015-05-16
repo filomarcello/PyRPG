@@ -68,7 +68,7 @@ def _ADD2_gem_modificator(gem: 'Gem') -> 'Gem':
     return gem
 
 # TODO arrange descriptions
-ADD2_GEMS_EXT_DESCRIPTIONS = (('ornamental', 
+ADD2_GEMS_EXT_DESCRIPTIONS = {'ornamental': 
         ('Azurite: Opaque, mottled deep blue',
         'Banded Agate: Brown, blue, red, and white stripes',
         'Blue Quartz: Transparent pale blue',
@@ -80,8 +80,8 @@ ADD2_GEMS_EXT_DESCRIPTIONS = (('ornamental',
         'Obsidian: Jet black',
         'Rhodochrosite: Light pink',
         'Tiger Eye Agate: Rich golden brown with dark striping',
-        'Turquoise: Aqua with darker mottling'),),
-                              ('semiprecious',
+        'Turquoise: Aqua with darker mottling'),
+                              'semiprecious':
         ('Bloodstone: Dark gray with red flecks',
         'Carnelian: Orange to red-brown',
         'Chalcedony: White',
@@ -94,8 +94,8 @@ ADD2_GEMS_EXT_DESCRIPTIONS = (('ornamental',
         'Sardonyx: Bands of red and white',
         'Smoky Quartz: light gray, yellow, brown or blue',
         'Star Rose Quartz: Smoky rose with white star center',
-        'Zircon: Clear pale aqua',),),
-                               ('fancy',
+        'Zircon: Clear pale aqua',),
+                               'fancy':
         ('Amber: Transparent golden',
         'Alexandrite: Dark green',
         'Amethyst: Purple crystal',
@@ -106,22 +106,22 @@ ADD2_GEMS_EXT_DESCRIPTIONS = (('ornamental',
         'Jet: Deep black',
         'Pearl: Pure white, rose, to black',
         'Spinel: Red, red-brown, green, or deep blue',
-        'Tourmaline: Pale green, blue, brown, or red',),),
-                                ('precious',
+        'Tourmaline: Pale green, blue, brown, or red',),
+                                'precious':
         ('Aquamarine: pale blue green',
          'Garnet: Deep red to violet crystal',
          'Pearl: Pure white, rose, to black',
          'Peridot: Olive green',
          'Spinel: Red, red-brown, green, or deep blue',
-         'Topaz: Golden yellow',),),
-                                 ('gems',
+         'Topaz: Golden yellow',),
+                                 'gems':
         ('Black Opal: Dark green with black mottling and golden flecks',
         'Fire Opal: Fiery red',
         'Opal: Pale blue with green and gold mottling',
         'Oriental Amethyst: Deep purple',
         'Oriental Topaz: Fiery yellow',
-        'Sapphire: Clear to medium blue',),),
-                                  ('jewels',
+        'Sapphire: Clear to medium blue',),
+                                  'jewels':
         ('Black Sapphire: Rich black with highlights',
         'Diamond: Clear blue-white, rich blue, yellow, or pink',
         'Emerald: Brilliant green',
@@ -129,7 +129,7 @@ ADD2_GEMS_EXT_DESCRIPTIONS = (('ornamental',
         'Oriental Emerald: Bright green',
         'Ruby: Clear to deep crimson red',
         'Star Ruby: Translucent ruby with white star highlights',
-        'Star Sapphire: Translucent blue with white star highlights',),))
+        'Star Sapphire: Translucent blue with white star highlights',),}
 
 
 class Jeweler(DiceTable):
@@ -168,11 +168,14 @@ class Jeweler(DiceTable):
         '''
         return [self.craft() for i in range(n)]
     
-    def _ext_descr(self):
+    def _ext_descr(self, gem):
         '''Add ad extended description to the creating gem.
         TODO
         '''
-        pass
+        gem._description = gem._description + ' ' + \
+                rand.choice(ADD2_GEMS_EXT_DESCRIPTIONS[gem._description])
+                
+        return gem
     
 class Mint(Dice):
     '''Class for random building money.

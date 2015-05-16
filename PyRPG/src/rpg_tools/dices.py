@@ -99,7 +99,7 @@ class DiceTable(Dice):
         >>> dt._items
         ('one', 'two', 'else')
         '''
-        weights, items = zip(*tab)
+        weights, items = list(zip(*tab))
         super().__init__('1d' + str(sum(weights)))
         self._cumul = tuple(itools.accumulate(weights))
         self._items = items

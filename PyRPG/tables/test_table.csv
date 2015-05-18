@@ -1,0 +1,3 @@
+class,strenght,dexterity,constitution,intelligence,wisdom,charisma
+fighter,9,0,0,0,0,0
+paladin,12,0,9,0,13,17

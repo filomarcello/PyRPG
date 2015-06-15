@@ -19,7 +19,12 @@ class Modifier(object):
         '''
         self.modifiers = {k: 0 for k in actions.keys}
         
-    def add(self, name: str, value: 'Number'):    
+    def add_modifier(self, name: str, value: 'Number'):    
         '''Add the modifier value to the name action.'''
         self.modifiers[name] = value
+        
+    def get_modifier(self, name: str):
+        '''Returns the value of a modifier.'''
+        return self.modifiers[name]
+    
         

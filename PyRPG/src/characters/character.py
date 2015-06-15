@@ -2,9 +2,12 @@
 Created on 06/apr/2015
 
 @author: marcello
+
+This module contains classes useful for implementing a RPG character.
+The base class, Character,  
 '''
 
-class Character(object):
+class Character(object): # TODO getters and setters
     '''Base class for a RPG character.
     
     This class implements a simple character having name, hitpoints, and
@@ -31,22 +34,26 @@ class Character(object):
         '''
         
         self.name = name
-        self.xp = xp
-        self.hp = hp
+        self.xp = xp # experience points
+        self.hp = hp # hitpoints
     
     def __str__(self):
         return 'Character: {s.name}\nXp: {s.xp}\nHitpoints: {s.hp}'\
             .format(s=self)
                 
         
-class RPGCharacter(Character): # TODO class, race, attribute, inventory, wearing
+class RPGCharacter(Character): # TODO 
     '''A complete RPG character.
     
     This class implements a RPG character with her/his name, race, attributes, 
     actions, inventory.
-    Added until now:
+    To be added:
     - actions
     - history
+    - race
+    - occupation (RPG class)
+    - attributes
+    - inventory
     '''
     pass 
 

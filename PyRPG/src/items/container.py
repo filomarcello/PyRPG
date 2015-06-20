@@ -9,7 +9,7 @@ class Container(object):
 
     def __init__(self, itemlist: list = []):
         '''Constructs a Container with a list of items.'''
-        self.items = itemlist
+        self._items = itemlist
     
     def get_weight(self):
         '''Get the total weight of the items contained.
@@ -20,7 +20,21 @@ class Container(object):
         >>> c.get_weight()
         12.5
         '''
-        return sum([i.get_weight() for i in self.items])
+        return sum([i.get_weight() for i in self._items])
+    
+class Inventory(Container):
+    '''Implements the character inventory, i.e. backpack, bags, etc.'''
+    pass
+
+
+class Suit(Container):
+    '''The collection of the items worn by the character'''
+    pass
+
+
+class Armament(Suit):
+    '''The collection of weapons and armors equipped by the character'''
+    pass
     
     
 # testing by doctest         

@@ -30,6 +30,35 @@ class Item(object):
     def __str__(self):
         return 'Item: {s._name}\nWeight: {s._weight}'.format(s=self)
     
+    
+class RPGItem(Item):
+    '''Extends the generic Item with modifier.'''
+    
+    def __init__(self, name: str = 'noname', 
+                 weight: float = 0.0,
+                 modifier: 'Modifier' = None):
+        '''modifier is a Modifier class containing modificators.
+        
+        This class allow item modificators which will be managed by the
+        Character class.
+        
+        >>> from characters.modifiers import Modifier
+        >>> from characters.actions import Actions        
+        >>> i = RPGItem('thing', 1.0, Modifier(Actions()))
+        >>> print(i)
+        RPGItem: thing
+        Weight: 1.0
+        '''
+        super().__init__(name, weight)
+        self._modifier = modifier
+        
+    def get_modifier(self):
+        '''Returns the modifiers associated with this item.'''
+        return self._modifier
+    
+    def __str__(self):
+        return 'RPGItem: {s._name}\nWeight: {s._weight}'.format(s=self)
+    
 # testing by doctest         
 if __name__ == "__main__":
     import doctest

@@ -23,12 +23,18 @@ class Container(object):
         return sum([i.get_weight() for i in self._items])
     
 class Inventory(Container):
-    '''Implements the character inventory, i.e. backpack, bags, etc.'''
-    pass
+    '''Implements the character inventory, i.e. backpack, bags, etc.
+    
+    The items are not equipped, so they influence the character only by their
+    weight.
+    '''
+    def __init__(self, itemlist: list = []):
+        '''items is a list of Items objects or subclasses.'''
+        super().__init__(itemlist)
 
 
 class Suit(Container):
-    '''The collection of the items worn by the character'''
+    '''The collection of the items worn or in using by the character'''
     pass
 
 

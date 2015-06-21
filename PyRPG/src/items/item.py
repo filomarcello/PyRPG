@@ -36,7 +36,8 @@ class RPGItem(Item):
     
     def __init__(self, name: str = 'noname', 
                  weight: float = 0.0,
-                 modifier: 'Modifier' = None):
+                 modifier: 'Modifier' = None,
+                 magic: bool = False):
         '''modifier is a Modifier class containing modificators.
         
         This class allow item modificators which will be managed by the
@@ -51,10 +52,14 @@ class RPGItem(Item):
         '''
         super().__init__(name, weight)
         self._modifier = modifier
+        self._magic = magic
         
     def get_modifier(self):
         '''Returns the modifiers associated with this item.'''
         return self._modifier
+    
+    def is_magic(self) -> bool:
+        return self._magic
     
     def __str__(self):
         return 'RPGItem: {s._name}\nWeight: {s._weight}'.format(s=self)

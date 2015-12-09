@@ -12,6 +12,7 @@ class Die:
 
         blah.
         """
+        # TODO: documentation
 
         if code:
             self._casts, self._faces = self._dicedecoder(code)

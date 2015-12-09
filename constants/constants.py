@@ -31,3 +31,5 @@ MAGIC = 'magic'
 ########## WEAPONS
 
 
+########## TERRAIN
+

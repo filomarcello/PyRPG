@@ -27,3 +27,7 @@ XP = 'hitpoints'
 ########## MODIFIERS
 
 MAGIC = 'magic'
+
+########## WEAPONS
+
+

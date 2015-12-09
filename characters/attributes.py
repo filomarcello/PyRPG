@@ -26,10 +26,14 @@ class Attributes:
     def set_attribute(self, name: str, value):
         self._attributes[name] = value
 
+    def __str__(self):
+        return self._attributes
+
 
 class DDattributes(Attributes):
     """Classic D&D or AD&D RPG attributes."""
 
     def __init__(self):
         """Builds D%D attributes with 0 (zero) values."""
-        super().__init__(attributes=dict(zip(DD_ATTRIBUTES, (0, 0, 0, 0, 0, 0))))
+        super().__init__(attributes=dict(zip(DD_ATTRIBUTES,
+                                             (0, 0, 0, 0, 0, 0))))

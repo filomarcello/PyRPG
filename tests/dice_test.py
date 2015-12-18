@@ -1,7 +1,7 @@
 import unittest
 from rpg_tools.dice import Die
 
-class test_die(unittest.TestCase):
+class DieTest(unittest.TestCase):
 
     def setUp(self):
         self.diecode = Die(code='3d8')

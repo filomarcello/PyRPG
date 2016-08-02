@@ -4,8 +4,7 @@ Created on 20/apr/2015
 @author: marcello
 '''
 
-DD_ABILITIES_NAMES = ['strength', 'dexterity', 'constitution', 'intelligence',
-                      'wisdom', 'charisma']
+from characters.constants import DD_ABILITIES_NAMES
 
 class Abilities(object):
     '''Base class for ability scores.

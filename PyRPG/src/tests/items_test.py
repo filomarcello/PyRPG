@@ -5,17 +5,29 @@ from items.item import Item
 class TestItem(unittest.TestCase):
 
     def setUp(self):
-        self.item = Item(name='Axe', weight=10.5)
 
-    def test_name(self):
-        self.assertEqual(self.item.name, 'axe')
-        self.item.name = 'sword'
-        self.assertEqual(self.item.name, 'sword')
+        self.i1 = Item()
+        self.i2 = Item(name='axe', weight=10.5)
 
-    # def test_weight(self):
-    #     self.assertEqual(self.item.weight, 10.5)
-    #     self.item.weight = 9.0
-    #     self.assertEqual(self.item.weight, 9.0)
+
+    def test_default_item(self):
+
+        self.assertEqual(self.i1.name, 'item')
+        self.assertEqual(self.i1.weight, 0.0)
+
+
+    def test_custom_item(self):
+
+        self.assertEqual(self.i2.name, 'axe')
+        self.assertEqual(self.i2.weight, 10.5)
+
+
+    def test_properties_item(self):
+
+        self.i2.name = 'battleaxe'
+        self.assertEqual(self.i2.name, 'battleaxe')
+        self.i2.weight = 20.0
+        self.assertEqual(self.i2.weight, 20.0)
 
 
 if __name__ == '__main__':

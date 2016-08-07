@@ -1,13 +1,17 @@
 """
 Created on 05/apr/2015
-Modified on 16/11/15
+Modified: 16/11/2015
+          02/08/2016 revised tests
 
 @author: marcello
 """
 
 
 class Item:
-    """Base abstract class for a generic item."""
+    """Base abstract class for a generic item.
+
+    All items have at least a name and a weight.
+    """
     
     def __init__(self, name: str = 'item', weight: float = 0.0):
         """Absolutely generic item."""

@@ -5,16 +5,29 @@ Modified: 07/08/2016 - Container subclasses Items.
 @author: marcello
 """
 
-class Container(object):
-    """Base class for items container.-"""
+from items.item import Item
 
-    def __init__(self, itemlist: list = []):
+class Container(Item):
+    """Base class for items container."""
+
+    def __init__(self, name: str = 'container',
+                 weight: float = 0.0,
+                 items: list = []):
         """Constructs a Container with a list of items."""
-        self._items = itemlist
-    
-    def get_weight(self):
-        """Get the total weight of the items contained."""
-        return sum([i.get_weight() for i in self._items])
+
+        super().__init__(name=name, weight=weight)
+        self._items = items
+
+    @property
+    def weight(self):
+        """Returns the own weight plus these of the contained items."""
+        return sum((w.weight for w in self._items)) + self._weight
+
+    @weight.setter
+    def weight(self, weight):
+        """Set the Container own weight, items weights remain unaltered."""
+        self._weight = weight
+
     
 class Inventory(Container):
     '''Implements the character inventory, i.e. backpack, bags, etc.

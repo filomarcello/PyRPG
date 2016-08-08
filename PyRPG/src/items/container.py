@@ -15,18 +15,35 @@ class Container(Item):
                  items: list = []):
         """Constructs a Container with a list of items."""
 
-        super().__init__(name=name, weight=weight)
+        super().__init__(name, weight)
         self._items = items
+
 
     @property
     def weight(self):
         """Returns the own weight plus these of the contained items."""
-        return sum((w.weight for w in self._items)) + self._weight
+        if self._items:
+            return sum((i._weight for i in self._items)) + self._weight
+        else:
+            return self._weight
+
 
     @weight.setter
     def weight(self, weight):
         """Set the Container own weight, items weights remain unaltered."""
         self._weight = weight
+
+
+    def __iadd__(self, item):
+        """Inplace addition of a Item object in the container."""
+        self._items.append(item)
+        return self
+
+    def __isub__(self, item):
+        """Inplace subtraction of a Item object in the container."""
+        self._items.remove(item)
+        return self
+
 
     
 class Inventory(Container):

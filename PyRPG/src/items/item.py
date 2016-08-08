@@ -2,6 +2,7 @@
 Created on 05/apr/2015
 Modified: 16/11/2015
           02/08/2016 revised tests
+          08/08/2016 weight is now integer
 
 @author: marcello
 """
@@ -13,7 +14,7 @@ class Item:
     All items have at least a name and a weight.
     """
     
-    def __init__(self, name: str = 'item', weight: float = 0.0):
+    def __init__(self, name: str = 'item', weight: int = 0):
         """Absolutely generic item."""
         self._name = name
         self._weight = weight
@@ -24,7 +25,7 @@ class Item:
         return self._weight
 
     @weight.setter
-    def weight(self, w: float):
+    def weight(self, w: int):
         self._weight = w
 
     @property

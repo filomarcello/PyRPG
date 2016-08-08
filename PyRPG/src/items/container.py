@@ -11,7 +11,7 @@ class Container(Item):
     """Base class for items container."""
 
     def __init__(self, name: str = 'container',
-                 weight: float = 0.0,
+                 weight: int = 0,
                  items: list = []):
         """Constructs a Container with a list of items."""
 
@@ -67,7 +67,3 @@ class Armament(Suit):
     pass
     
     
-# testing by doctest         
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod() 

@@ -16,9 +16,9 @@ class Character(object):
     '''
     
     def __init__(self, name: str = 'noname', 
-                 xp: 'Number' = 0, 
-                 hp: 'Number' = 1,
-                 level: 'Number' = 1):
+                 xp: int = 0,
+                 hp: int = 1,
+                 level: int = 1):
         """Name, XPs, level and hitpoints make a basic RPG character."""
         
         self._name = name

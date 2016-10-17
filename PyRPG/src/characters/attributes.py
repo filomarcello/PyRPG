@@ -40,23 +40,8 @@ class DD_Abilities(Abilities):
     def __init__(self, values: list = [0, 0, 0, 0, 0, 0]):
         """Order of the values list: str, dex, con, int, wis, cha.
 
-        Default are zero values.
-        >>> dd_ab = DD_Abilities()
-        >>> dd_ab.get_ability('constitution')
-        0
+        Default are zero values."""
 
-        This constructor does not check if values are in range for D&D rules:
-        >>> dd_ab2 = DD_Abilities([1000, 3000, -69, 10.25, 858, 0])
-        >>> dd_ab2.get_ability('constitution')
-        -69
-        >>> dd_ab2.get_ability('wisdom')
-        858
-        """
         super().__init__(abilities={n: v for n, v 
                                     in zip(DD_ABILITIES_NAMES, values)})
                                     
- 
-# testing by doctest         
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod() 

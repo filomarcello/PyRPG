@@ -3,6 +3,7 @@ Created on 05/apr/2015
 Modified: 16/11/2015
           02/08/2016 revised tests
           08/08/2016 weight is now integer
+          17/10/2016 revised RPGItem
 
 @author: marcello
 """
@@ -48,18 +49,7 @@ class Item:
 #                  weight: float = 0.0,
 #                  modifier: 'Modifier' = None,
 #                  magic: bool = False):
-#         '''modifier is a Modifier class containing modificators.
-#
-#         This class allow item modificators which will be managed by the
-#         Character class.
-#
-#         >>> from characters.modifiers import Modifier
-#         >>> from characters.actions import Actions
-#         >>> i = RPGItem('thing', 1.0, Modifier(Actions()))
-#         >>> print(i)
-#         RPGItem: thing
-#         Weight: 1.0
-#         '''
+
 #         super().__init__(name, weight)
 #         self._modifier = modifier
 #         self._magic = magic

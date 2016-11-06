@@ -80,28 +80,25 @@ class DiceTable(Dice):
 
         Doesn't check the integrity of intervals and data.
         """
-        if len(tab[0]) == 2: # (throw, returned)
+        if len(tab[0]) == 2: # (throw, returned) or (breakpoints, returned)
             tab.sort()
 
             # the first element of the last tuple is the maximum
             super().__init__('1d' + str(tab[-1][0]))
 
-            self._table = tuple(tab)
+            self._breakpoints, self._returned = zip(*tab)
 
 
-        # if len(tab[0]) == 3: # (min, max, returned)
-        #     mins, maxs, items = zip(*tab)
-        #
-        #     # initialize a dice with number of faces == max of the maximi of the
-        #     # intervals
-        #     super().__init__('1d' + str(max(maxs)))
+        if len(tab[0]) == 3: # (min, max, returned)
+            tab.sort()
 
-            # weights, items = list(zip(*tab))
-            #
-            # self._cumul = tuple(itools.accumulate(weights))
-            # self._items = items
-        
+            # the second element of the last tuple is the maximum
+            super().__init__('1d' + str(tab[-1][1]))
+
+            unusued, self._breakpoints, self._returned = zip(*tab)
+
+
     def throw(self):
         """Returns random item in the table."""
-        return rand.choice(self._table)[1]
+        return self._returned[bs.bisect(self._breakpoints, super().throw()) - 1]
 

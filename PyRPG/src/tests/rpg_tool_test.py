@@ -2,10 +2,12 @@ import unittest
 
 from rpg_tools.dices import Dice, DiceTable
 
-RETURNED = ('first', 'second', 'third', 'four', 'five', 'six')
-THROWS = (1, 2, 3, 4, 5, 6)
+RETURNED =      ('two',    'six',     'five',   'one',   'four',   'three')
+THROWS =        (2,        6,         5,        1,       4,        3)
+INTERVALS_INT = ([11, 50], [96, 100], [81, 95], [1, 10], [61, 80], [51, 60])
 
 SINGLE_THROW = list(zip(THROWS, RETURNED))
+MINMAX_INT = list((*i, r) for i, r in zip(INTERVALS_INT, RETURNED))
 
 
 class TestDice(unittest.TestCase):
@@ -42,21 +44,24 @@ class TestDiceTab(unittest.TestCase):
     def setUp(self):
 
         self.dt1 = DiceTable(SINGLE_THROW)
-        # self.dt2 = DiceTable()
+        self.dt2 = DiceTable(MINMAX_INT)
         # self.dt3 = DiceTable()
 
     def test_dicetable_single_throw(self):
 
         self.assertIn(self.dt1.throw(), RETURNED)
+        self.assertSequenceEqual(self.dt1._breakpoints, sorted(THROWS))
+
 
     def test_dicetable_minmax_int(self):
 
-        pass
+        self.assertIn(self.dt2.throw(), RETURNED)
+        self.assertSequenceEqual(self.dt2._breakpoints,
+                                 sorted(ma for mi, ma in INTERVALS_INT))
 
     def test_dicetable_minmax_str(self):
 
         pass
-
 
 
 if __name__ == '__main__':

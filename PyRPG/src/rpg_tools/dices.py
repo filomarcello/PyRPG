@@ -1,33 +1,24 @@
-'''
+"""
 Created on 01/mag/2015
 
 @author: marcello
-'''
+"""
 import random as rand
 import itertools as itools
 import bisect as bs
 
 class Dice(object):
-    '''Implements the classical dices in RPG.
-    
-    Usually d6, d8, d10 and so on.   
-    '''
+    """Implements the classical dices in RPG.
+
+    Usually d6, d8, d10 and so on.
+    """
     
     def __init__(self, dice_string: str = 'd6'):
-        '''Uses the typical RPG code as a string to build a dice.
-        
+        """Uses the typical RPG code as a string to build a dice.
+
         It does not check if dice_string is a valid dice code.
-        The default dice is the common cube: d6 (or 1d6)
-        >>> d = Dice()
-        >>> print(d)
-        1d6
-         
-        >>> d2 = Dice('3d8')
-        >>> print(d2)
-        3d8
-        
-        Assert 'd' in dice_string. TODO Exceptions?
-        '''
+        The default dice is the common cube: d6 (or 1d6).
+        """
         self._cast_times, self._faces = self._process_dice_string(dice_string)
         self._sequence =  [] # stores the sequence of numbers thrown
         
@@ -35,36 +26,21 @@ class Dice(object):
         return str(self._cast_times) + 'd' + str(self._faces)
     
     def throw(self) -> int:
-        '''Dice is thrown.
-        
-        >>> d = Dice('3d8')
-        >>> 3 <= d.throw() <= 24
-        True
-        '''
+        """Dice is thrown."""
         self._sequence = self._throws(self._cast_times, self._faces)
         return sum(self._sequence)
-    
-    def get_sequence(self) -> list:
-        '''Returns the list values generated during throw function call.
-        
-        >>> d = Dice('5d20')
-        >>> o = d.throw()
-        >>> sum(d.get_sequence()) == o
-        True
-        '''
+
+    @property
+    def sequence(self) -> list:
+        """Returns the list values generated during throw function call."""
         return self._sequence
     
     def throw_this(self, dice_string: str) -> int:
-        '''Static method that throws a temporary whatever dice.
-        
+        """Static method that throws a temporary whatever dice.
+
         Does not hold faces, cast_times, and sequences. For this purpose build
         a proper dice by constructor.
-        >>> d = Dice()
-        >>> print(d)
-        1d6
-        >>> 3 <= d.throw_this('3d10') <= 30
-        True
-        '''
+        """
         return sum(self._throws(*self._process_dice_string(dice_string)))
     
     # internal function that processes dice_string    

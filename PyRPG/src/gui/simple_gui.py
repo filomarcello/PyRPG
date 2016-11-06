@@ -4,6 +4,7 @@ version: 0.1
 """
 
 import tkinter as tk
+from PIL import ImageTk
 
 from environment.map import Map
 
@@ -43,5 +44,28 @@ class CharGui(Gui):
                                            text=c[x][y], anchor=tk.NW)
 
         self._map_area.pack()
+
+
+class BMPGui(Gui):
+    """Shows bitmap tiles."""
+
+    def __init__(self, map: Map, master=None):
+        self._image_hook = []  # keeps refs for Image
+        super().__init__(map, master)
+
+
+    def _show_map(self):
+        c = self._map.view_all()
+        for x in range(len(c)):
+            for y in range(len(c[x])):
+                ph = ImageTk.PhotoImage(c[x][y])
+                self._image_hook.append(ph)
+                self._map_area.create_image(x * 20, y * 20,
+                                           image=ph,
+                                           anchor=tk.NW)
+
+        self._map_area.pack()
+
+
 
 

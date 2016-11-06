@@ -42,6 +42,10 @@ class Tile(object):
     def view(self):
         return self._view
 
+    @view.setter
+    def view(self, v):
+        self._view = v
+
 
 
 

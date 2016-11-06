@@ -1,3 +1,8 @@
+""" created 05/11/2016
+author: marcello
+version: 0.1
+"""
+
 from environment.map import Map
 from environment.tile import Tile
 from gui.simple_gui import CharGui

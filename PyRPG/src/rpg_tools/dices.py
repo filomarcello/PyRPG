@@ -58,39 +58,50 @@ class Dice(object):
                 for i in range(cast_times)]
     
     
-class DiceTable(Dice):   
-    '''Implements a table of intervals to select randomly.'''
+class DiceTable(Dice):
+    """Implements a table of intervals to select randomly.
+
+    Frequently in RPG games events, wandering monsters, treasures, etc. were
+    determined by a dice throw and a reference table. E.g 1 to 5: goblins,
+    6 to 13: cobolds, 14 to 20: hobgoblins.
+
+    DiceTable extends a single dice (1dX) being X the maximum of the last
+    interval.
+    """
     
-    def __init__(self, tab: tuple): 
-        '''tab is a tuple from which random weighted select an item.
-        
-        tab has to be as the following:
-        ((weight, item_to_return), ...)
-                
-        >>> dt = DiceTable(((1, 'one'), (2, 'two'), (9, 'else')))
-        >>> dt._faces
-        12
-        >>> dt._cumul
-        (1, 3, 12)
-        >>> dt._items
-        ('one', 'two', 'else')
-        '''
-        weights, items = list(zip(*tab))
-        super().__init__('1d' + str(sum(weights)))
-        self._cumul = tuple(itools.accumulate(weights))
-        self._items = items
+    def __init__(self, tab: list):
+        """tab -- a list of tuples.
+
+        Each tuple can be:
+        - (throw, returned): throw is the precise number of dice throw.
+        - (min, max, returned): min and max are boundaries of the interval.
+        - ('min-max', returned): min-max is a string with interval boundaries
+        Returned is what has to be returned in corrispondence of that result.
+
+        Doesn't check the integrity of intervals and data.
+        """
+        if len(tab[0]) == 2: # (throw, returned)
+            tab.sort()
+
+            # the first element of the last tuple is the maximum
+            super().__init__('1d' + str(tab[-1][0]))
+
+            self._table = tuple(tab)
+
+
+        # if len(tab[0]) == 3: # (min, max, returned)
+        #     mins, maxs, items = zip(*tab)
+        #
+        #     # initialize a dice with number of faces == max of the maximi of the
+        #     # intervals
+        #     super().__init__('1d' + str(max(maxs)))
+
+            # weights, items = list(zip(*tab))
+            #
+            # self._cumul = tuple(itools.accumulate(weights))
+            # self._items = items
         
     def throw(self):
-        '''Returns random weighted item.
-        
-        >>> dt = DiceTable(((1, 'one'), (4, 'two'), (5, 'else')))
-        >>> dt.throw() in ['one', 'two', 'else']
-        True
-        '''
-        return self._items[bs.bisect(self._cumul, super().throw())]
-    
-# tests
+        """Returns random item in the table."""
+        return rand.choice(self._table)[1]
 
-if __name__ == '__main__':
-    import doctest
-    doctest.testmod()

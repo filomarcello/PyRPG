@@ -1,6 +1,11 @@
 import unittest
 
-from rpg_tools.dices import Dice
+from rpg_tools.dices import Dice, DiceTable
+
+RETURNED = ('first', 'second', 'third', 'four', 'five', 'six')
+THROWS = (1, 2, 3, 4, 5, 6)
+
+SINGLE_THROW = list(zip(THROWS, RETURNED))
 
 
 class TestDice(unittest.TestCase):
@@ -30,6 +35,27 @@ class TestDice(unittest.TestCase):
         # checks if throw_this leaves sequence empty
         self.d4.throw_this('3d6')
         self.assertListEqual(self.d4.sequence, [])
+
+
+class TestDiceTab(unittest.TestCase):
+
+    def setUp(self):
+
+        self.dt1 = DiceTable(SINGLE_THROW)
+        # self.dt2 = DiceTable()
+        # self.dt3 = DiceTable()
+
+    def test_dicetable_single_throw(self):
+
+        self.assertIn(self.dt1.throw(), RETURNED)
+
+    def test_dicetable_minmax_int(self):
+
+        pass
+
+    def test_dicetable_minmax_str(self):
+
+        pass
 
 
 

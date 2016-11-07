@@ -16,18 +16,14 @@ MINMAX_INT = list((*i, r) for i, r in zip(INTERVALS_INT, RETURNED))
 
 dt1 = DiceTable(SINGLE_THROW)
 dt2 = DiceTable(MINMAX_INT)
-dt3 = DiceTable()
+dt3 = DiceTable([(96, 100, 'minor'), (1, 95, 'major')])
 
-print('Single throw')
-print(dt1._breakpoints, dt1._returned, dt1._cast_times, dt1._faces)
+st = list(dt1.throw() for i in range(10000))
+mm = list(dt2.throw() for i in range(10000))
+asim = list(dt3.throw() for i in range(10000))
 
-for i in range(10):
-    print(dt1.throw(), end=' ')
-    time.sleep(0.1)
+n_st = {r: st.count(r) for r in RETURNED}
+n_mm = {r: mm.count(r) for r in RETURNED}
+n_asim = {r: asim.count(r) for r in ('minor', 'major')}
 
-print('\n\nIntervals')
-print(dt2._breakpoints, dt2._returned, dt2._cast_times, dt2._faces)
-
-for i in range(10):
-    print(dt2.throw(), end=' ')
-    time.sleep(0.1)
+print(n_st, n_mm, n_asim, sep='\n')

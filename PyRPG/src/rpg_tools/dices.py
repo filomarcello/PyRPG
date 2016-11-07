@@ -75,7 +75,7 @@ class DiceTable(Dice):
         Each tuple can be:
         - (throw, returned): throw is the precise number of dice throw.
         - (min, max, returned): min and max are boundaries of the interval.
-        - ('min-max', returned): min-max is a string with interval boundaries
+        - (breakpoints, returned): breakpoints are max boundaries of intervals
         Returned is what has to be returned in corrispondence of that result.
 
         Doesn't check the integrity of intervals and data.
@@ -100,5 +100,6 @@ class DiceTable(Dice):
 
     def throw(self):
         """Returns random item in the table."""
-        return self._returned[bs.bisect(self._breakpoints, super().throw()) - 1]
+        d = super().throw()
+        return self._returned[bs.bisect(self._breakpoints, d - 1)]
 

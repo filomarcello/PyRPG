@@ -1,12 +1,15 @@
 """
 Created on 05/apr/2015
 
+Updated 12/11/2016: revised Money class.
+
 @author: marcello
 Issues:
 - should be added a method for "subtract" money or not? It may be used add
 method.
 - evaluate the utility of a function of add/left single type of coin.
 """
+
 from items.constants import COIN_WEIGHT, DD_CURRENCIES, GEM_WEIGHT, \
     DD_CURRENCY_EXCHANGE
 from items.item import Item
@@ -21,6 +24,7 @@ Gold: {n[gold]}
 Electrum: {n[electrum]}
 Platinum: {n[platinum]}
 '''
+
 
 class Money(Item):
     """Base class for money.
@@ -56,18 +60,28 @@ class Money(Item):
         return sum([self._amount[coin]*rate for coin, rate
                     in exchange.items()])
             
-    
+    # operators
+
     def add(self, other: 'Money'):
-        """Add another money object to the caller, merging them."""
+        """Add another Money object to the caller, merging them.
+
+        The Money object added will be emptied.
+        """
         for coin in DD_CURRENCIES:
             self._amount[coin] += other.get_coins()[coin]
             other._amount[coin] = 0
-    
+
+    # inner methods
+
+    def _aggregate_value(self):
+        """Return the value of the Money in integer amounts of currencies."""
+        pass # TODO: aggregate value
+
     def __str__(self):
         return MONEY_STR.format(n=self._amount)
         
         
-class Gem(Item):
+class Gem(Item): # TODO: revisiting Gem class
     '''Class for gem objects.'''
     
     def __init__(self, value: int = 5, descr: str = ''):

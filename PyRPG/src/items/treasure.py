@@ -36,7 +36,6 @@ class Money(Item):
     from 0.
     """
 
-    @singledispatch
     def __init__(self, amount=None,
                  curr: tuple = DD_CURRENCIES,
                  curr_exch: dict = DD_CURRENCY_EXCHANGE,
@@ -53,47 +52,42 @@ class Money(Item):
         Does not check if the amount of coins is negative.
         """
         super().__init__(name='money', weight=0)
-
-    @__init__.register(list)
-    @__init__.register(tuple)
-    def __init_seq__(self, amount=None,
-                     curr: tuple = DD_CURRENCIES,
-                     curr_exch: dict = DD_CURRENCY_EXCHANGE):
-
-        super().__init__(name='money', weight=0)
-        self._amount = Counter({c: v for c, v in zip(curr, amount)})
         self._curr_exch = curr_exch
+        # initialize the Counter amount to 0 counts
+        self._amount = Counter({c: 0 for c in curr_exch.keys()})
 
-    @__init__.register(dict)
-    def __init_dict__(self, amount=None, curr_exch: dict = DD_CURRENCY_EXCHANGE):
+        # for list, tuple, and dict argument
+        if amount:
+            if isinstance(amount, (list, tuple)):
+                self._amount += Counter({c: v for c, v in zip(curr, amount)})
 
-        super().__init__(name='money', weight=0)
-        self._amount = Counter(amount)
-        self._curr_exch = curr_exch
+            elif isinstance(amount, dict):
+                self._amount = Counter({c: 0 for c in curr_exch.keys()})
+                self._amount += Counter(amount)
+            else:
+                pass # TODO: raise error?
 
-    @__init__.register(type(None))
-    def __init_kwargs__(self, amount=None,
-                        curr_exch: dict = DD_CURRENCY_EXCHANGE,
-                        **kwargs):
+        # for kwargs specified
+        if kwargs:
+            # if kwargs's not empty, add currencies amounts
+            self._amount += Counter(kwargs)
 
-        super().__init__(name='money', weight=0)
-        self._curr_exch = curr_exch
-        self._amount = Counter(kwargs) # TODO: check if arg is in curr_exch
 
     @property
     def weight(self):
         pass
 
     def coins(self, coin: str = None):
-        """Returns a dict with the amounts of all or specified type of coins.
+        """Returns the amounts of all or specified type of coins.
 
-        If no coin is specified, it returns a dict with all coins and relative
-        amounts. Otherwise, it returns the number of the specified coin.
+        If no coin is specified, it returns a Counter with all coins and
+        relative amounts. Otherwise, it returns the number (int) of the
+        specified coin.
         """
         if not coin:
-            return dict(self._amount)
-
+            return Counter(self._amount)
         return self._amount[coin]
+
             
     def value(self, exchange: list = DD_CURRENCY_EXCHANGE):
         """Return the overall value of all coins in gold coins.

@@ -69,5 +69,8 @@ class Container(Item):
             self._items.remove(item)
         return self
 
+
+class Backpack(Container):
+    pass # TODO: max capacity
     
     

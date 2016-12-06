@@ -1,7 +1,7 @@
 import unittest
 from collections import Counter
 
-from items.constants import CURRENCIES_EXCHANGE, DD_CURRENCIES
+from items.constants import CURRENCIES_EXCHANGE, DD_CURRENCIES, COIN_WEIGHT
 from items.treasure import Money
 
 
@@ -60,13 +60,17 @@ class TestMoney(unittest.TestCase):
 
     def test_value(self):
 
-        # self.assertEqual(self.m1.value(), 0.01)
-        # self.assertEqual(self.m2.value(), WALLET1_VALUE)
-        # self.assertEqual(self.m3.value(), 28)
-        pass
+        self.assertEqual(self.m1.value, 0.0)
+        self.assertEqual(self.m2.value, WALLET1_VALUE)
+        self.assertEqual(self.m3.value, 28.0)
+
 
     def test_weight(self):
-        pass
+
+        self.assertEqual(self.m1.weight, 0.0)
+        self.assertEqual(self.m3.weight, 28 * COIN_WEIGHT)
+        self.assertEqual(self.m5.weight, sum(LIST_COINS) * COIN_WEIGHT)
+
 
 if __name__ == '__main__':
     unittest.main()

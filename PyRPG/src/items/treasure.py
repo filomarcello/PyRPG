@@ -74,8 +74,9 @@ class Money(Item):
 
 
     @property
-    def weight(self):
-        pass
+    def weight(self) -> float:
+        return sum(self._amount.values()) * COIN_WEIGHT
+
 
     def coins(self, coin: str = None):
         """Returns the amounts of all or specified type of coins.
@@ -88,14 +89,15 @@ class Money(Item):
             return Counter(self._amount)
         return self._amount[coin]
 
-            
-    def value(self, exchange: list = DD_CURRENCY_EXCHANGE):
+    @property
+    def value(self, exchange: list = DD_CURRENCY_EXCHANGE) -> float:
         """Return the overall value of all coins in gold coins.
 
-        Can return a float, if the value is not a multiple of gold coins.
+        Return a float, since the value could not be an exact multiple of gold
+        coins.
         """
-        return sum([self._amount[coin]*rate for coin, rate
-                    in exchange.items()])
+        return sum((self._amount[coin]*rate for coin, rate
+                    in exchange.items()))
             
     # operators
 

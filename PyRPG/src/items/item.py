@@ -4,10 +4,22 @@ Modified: 16/11/2015
           02/08/2016 revised tests
           08/08/2016 weight is now integer
           17/10/2016 revised RPGItem
+          07/12/2016 add weight() function to weight an iterable of Item objs
 
 @author: marcello
 """
+import collections.abc
 
+##### functions
+
+def weight(items) -> int:
+    """Weights a single Item or a Iterable of Item objects."""
+    if isinstance(items, collections.abc.Sequence):
+        return sum(weight(i) for i in items)
+    return items.weight
+
+
+##### classes
 
 class Item:
     """Base abstract class for a generic item.
@@ -40,27 +52,3 @@ class Item:
         
     def __str__(self):
         return 'Item:{s._name}, Weight:{s._weight}'.format(s=self)
-
-
-# class RPGItem(Item):
-#     '''Extends the generic Item with modifier.'''
-#
-#     def __init__(self, name: str = 'noname',
-#                  weight: float = 0.0,
-#                  modifier: 'Modifier' = None,
-#                  magic: bool = False):
-
-#         super().__init__(name, weight)
-#         self._modifier = modifier
-#         self._magic = magic
-#
-#     def get_modifier(self):
-#         '''Returns the modifiers associated with this item.'''
-#         return self._modifier
-#
-#     def is_magic(self) -> bool:
-#         return self._magic
-#
-#     def __str__(self):
-#         return 'RPGItem: {s._name}\nWeight: {s._weight}'.format(s=self)
-#

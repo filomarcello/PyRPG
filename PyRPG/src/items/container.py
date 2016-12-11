@@ -80,21 +80,20 @@ class Backpack(Container):
 
     def __init__(self, weight: int, max_items: int, max_weight: int,
                  name: str = 'container'):
-        if max_items or max_weight:
-            super().__init__(name, weight, items=[])
-            self._max_items = max_items or float('inf')
-            self._max_weight = max_weight or float('inf')
-        else:
-            pass # TODO: raise an exception to be impemented
+
+        super().__init__(name, weight, items=[])
+        self._max_items = max_items or float('inf')
+        self._max_weight = max_weight or float('inf')
+
 
     def __iadd__(self, item): # TODO: partial addition and deletion of other
 
-        if weight(self.items) + weight(item) > self._max_weight:
+        if weight(self._items) + weight(item) > self._max_weight:
             return self  # TODO: raise an exception
 
         if isinstance(item, collections.abc.Sequence):
 
-            if (len(self._items) + len(item) > self._max_items):
+            if len(self._items) + len(item) > self._max_items:
                 return self # TODO: raise an exception
         else:
             if (len(self._items) == self._max_items) or ():

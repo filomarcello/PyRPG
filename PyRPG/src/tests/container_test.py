@@ -76,6 +76,7 @@ class TestBackpack(unittest.TestCase):
 
         self.b1 = Backpack(weight=50, max_items=5, max_weight=None)
         self.b2 = Backpack(weight=25, max_items=None, max_weight=1000)
+        self.b3 = Backpack(weight=30, max_weight=None, max_items=None)
 
     def test_weight(self):
 
@@ -95,6 +96,12 @@ class TestBackpack(unittest.TestCase):
         self.b2 += ITEM # +500
         self.b2 += CUSTOM_ITEMS # + a lot
         self.assertEqual(len(self.b2.items), 2) # remaining 2 (weight = 1000)
+
+        #test inplace subctraction
+        self.b3 += CUSTOM_ITEMS_4
+        self.assertEqual(len(self.b3.items), 5)
+        self.b3 -= CUSTOM_ITEMS_4
+        self.assertEqual(len(self.b3.items), 0)
 
 if __name__ == '__main__':
     unittest.main()
